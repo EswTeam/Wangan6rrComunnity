@@ -2,35 +2,101 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wangan Chatroom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wangan6RR Chatroom</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #fff;
+      background-color: #0f0f0f;
+      color: white;
+      margin: 0;
+      padding: 0;
     }
-    header {
-      background-color: #b30000;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
     }
-    iframe {
-      width: 100%;
-      height: calc(100vh - 70px);
+    #login-screen, #chat-screen {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 1rem;
+      margin: 5px 0;
+      border-radius: 5px;
+    }
+    #messages {
+      border: 1px solid #555;
+      height: 300px;
+      overflow-y: scroll;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #1a1a1a;
+    }
+    .message {
+      margin-bottom: 8px;
+    }
+    .username {
+      color: #ff4040;
+      font-weight: bold;
+    }
+    .button-red {
+      background-color: #ff4040;
+      color: white;
       border: none;
     }
   </style>
 </head>
 <body>
-  <header>
-    Wangan Midnight 6RR Public Chatroom
-  </header>
-  
-  <!-- Ganti link bawah dengan embed livechat sebenar -->
-  <iframe src="https://chatango.com/iframe/yourchatroomname"></iframe>
+  <div class="container">
+    <!-- Login screen -->
+    <div id="login-screen" class="active">
+      <h2>Masukkan Nama Anda</h2>
+      <input type="text" id="username-input" placeholder="Contoh: Rizal69" />
+      <button class="button-red" onclick="enterChat()">Start Chatting</button>
+    </div>
 
+    <!-- Chat screen -->
+    <div id="chat-screen">
+      <h2>Wangan6RR Chatroom</h2>
+      <div id="messages"></div>
+      <input type="text" id="message-input" placeholder="Tulis mesej anda..." onkeydown="if(event.key==='Enter') sendMessage()" />
+      <button class="button-red" onclick="sendMessage()">Hantar</button>
+    </div>
+  </div>
+
+  <script>
+    let username = '';
+
+    function enterChat() {
+      const input = document.getElementById('username-input');
+      if (input.value.trim() !== '') {
+        username = input.value.trim();
+        document.getElementById('login-screen').classList.remove('active');
+        document.getElementById('chat-screen').classList.add('active');
+        document.getElementById('message-input').focus();
+      } else {
+        alert('Sila masukkan nama anda');
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('message-input');
+      const msg = input.value.trim();
+      if (msg !== '') {
+        const messagesDiv = document.getElementById('messages');
+        const newMsg = document.createElement('div');
+        newMsg.classList.add('message');
+        newMsg.innerHTML = `<span class="username">${username}:</span> ${msg}`;
+        messagesDiv.appendChild(newMsg);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        input.value = '';
+      }
+    }
+  </script>
 </body>
 </html>
